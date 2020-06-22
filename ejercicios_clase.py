@@ -18,10 +18,24 @@ __version__ = "1.1"
 import csv
 import re
 
+import funciones
+
+
+def contar_lineas(archivo):
+
+   cantidad_lineas = len(archivo)
+
+   return cantidad_lineas
+
 
 def ej1():
     # Ejercicios con archivos txt
-    cantidad_lineas = 0
+    
+    with open("notas.txt") as notas:
+        x = list(csv.DictReader(notas))
+
+    cantidad_lineas = contar_lineas(x)
+    print(cantidad_lineas)
 
     '''
     Realizar un prorgrama que cuenta la cantidad de líneas
@@ -55,8 +69,18 @@ def ej2():
     al final del proceso el valor.
     '''
 
-    # fi = open('nota.txt', 'r')
-    # fo = open(.......)
+    fi = open("notas.txt", "r")
+    fo = open("nuevo.txt", "w")
+
+    for line in fi:
+        
+        fo.write(line)
+        cantidad_lineas += 1
+
+    print(cantidad_lineas)
+
+    fi.close()
+    fo.close()
 
     # Recuerde cerrar los archivos al final ;)
 
@@ -71,12 +95,52 @@ def ej3():
     de departamentos de 3 ambientes disponibles.
     Al finalizar el proceso, imprima en pantalla los resultados.
     '''
+    dptos_2amb = 0
+    dptos_3amb = 0
+    with open('propiedades.csv') as csvfile:
+        data = list(csv.DictReader(csvfile))
+
+    for i in range(len(data)):
+        row = data[i]
+        
+        try:
+            ambientes = int(row.get("ambientes"))
+            if ambientes == 2:
+                dptos_2amb += 1
+            else:
+                if ambientes == 3:
+                    dptos_3amb += 1
+        except:
+            continue
+
+    print(dptos_2amb)
+    print(dptos_3amb)
 
 
 def ej4():
     # Ejercicios con diccionarios
-    inventario = {'manzanas': 6}
+    inventario = {}
+    condicion = True
 
+    while condicion:
+        f_v = str(input("Ingrese nombre fruta/verdura o fin para salir:\n"))
+        if f_v == "fin":
+            break
+        else:
+            cantidad = int(input("Ingrese cantidad en stock:\n"))
+                
+        inventario[f_v] = cantidad
+
+    while condicion:
+        f_v_s = str(input("Ingrese nombre fruta/verdura a saber stock o fin para salir:\n"))
+        if f_v_s == "fin":
+            break
+        else:
+                print(inventario.get(f_v_s)) 
+        
+
+
+    
     '''
     Realice un programa que pida por consola
     el nombre de una fruta o verdura y luego
@@ -110,6 +174,42 @@ def ej4():
 def ej5():
     # Ejercicios con archivos CSV
     inventario = {}
+
+    invent = open('inventario.csv', 'w', newline='')
+
+    header = ["fruta/verdura", "cantidad"]
+
+    writer = csv.DictWriter(invent, fieldnames=header)
+
+    
+
+    condicion = True
+    
+    while condicion:
+        
+        f_v = str(input("Ingrese nombre fruta verdura o fin para salir:\n"))    
+        
+        
+        if f_v == "fin":
+            invent.close()
+            break
+        else:
+            cant = int(input("Ingrese cantidad en stock:\n"))
+            writer.writeheader()
+            
+            writer.writerow({"fruta/verdura": f_v, "cantidad": cant})
+
+    
+        
+        
+            
+         
+
+
+
+
+
+
 
     '''
     Basado en el ejercicio anterior, genere un archivo CSV
@@ -148,4 +248,4 @@ if __name__ == '__main__':
     #ej2()
     #ej3()
     #ej4()
-    #ej5()
+    ej5()
