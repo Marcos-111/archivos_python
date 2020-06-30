@@ -18,7 +18,7 @@ __version__ = "1.1"
 import csv
 import re
 
-import funciones
+
 
 
 def contar_lineas(archivo):
@@ -246,6 +246,6 @@ if __name__ == '__main__':
     print("Bienvenidos a otra clase de Inove con Python")
     ej1()
     #ej2()
-    #ej3()
+    ej3()
     #ej4()
     ej5()
